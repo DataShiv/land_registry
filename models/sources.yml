@@ -1,0 +1,106 @@
+version: 2
+
+sources:
+  - name: land_registry
+    description: Raw HM Land Registry Price Paid Data loaded into Snowflake.
+    database: LAND_REGISTRY
+    schema: RAW
+
+    tables:
+      - name: price_paid
+        identifier: PRICE_PAID
+        description: >
+          Raw property transaction records from the HM Land Registry
+          complete Price Paid Data file. One row represents one source
+          transaction record.
+
+        columns:
+          - name: TRANSACTION_ID_RAW
+            description: Unique identifier assigned to the source transaction.
+            data_tests:
+              - not_null
+              - unique
+
+          - name: PRICE_RAW
+            description: Sale price as received from the source, stored as text.
+            data_tests:
+              - not_null
+
+          - name: TRANSFER_DATE_RAW
+            description: Date of the property transfer as received, stored as text.
+            data_tests:
+              - not_null
+
+          - name: POSTCODE_RAW
+            description: Property postcode as received from the source.
+
+          - name: PROPERTY_TYPE_CODE_RAW
+            description: Source code identifying the property type.
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ['D', 'S', 'T', 'F', 'O']
+
+          - name: OLD_NEW_CODE_RAW
+            description: Source code indicating whether the property was newly built.
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ['Y', 'N']
+
+          - name: DURATION_CODE_RAW
+            description: Source code indicating the property's tenure.
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ['F', 'L', 'U']
+
+          - name: PAON_RAW
+            description: Primary Addressable Object Name, usually the house number or property name.
+
+          - name: SAON_RAW
+            description: Secondary Addressable Object Name, such as a flat or unit number.
+
+          - name: STREET_RAW
+            description: Street name as received from the source.
+
+          - name: LOCALITY_RAW
+            description: Locality as received from the source.
+
+          - name: TOWN_CITY_RAW
+            description: Town or city as received from the source.
+
+          - name: DISTRICT_RAW
+            description: Administrative district as received from the source.
+
+          - name: COUNTY_RAW
+            description: County as received from the source.
+
+          - name: PPD_CATEGORY_TYPE_RAW
+            description: Source code identifying the Price Paid Data transaction category.
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ['A', 'B']
+
+          - name: RECORD_STATUS_CODE_RAW
+            description: Source code indicating whether the record was added, changed, or deleted.
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ['A', 'C', 'D']
+
+          - name: SOURCE_FILE_NAME
+            description: Name of the source file from which the row was loaded.
+            data_tests:
+              - not_null
+
+          - name: SOURCE_FILE_ROW_NUMBER
+            description: Original row number within the source file.
+            data_tests:
+              - not_null
+
+          - name: LOADED_AT
+            description: Timestamp recording when the row was loaded into Snowflake.
+            data_tests:
+              - not_null
