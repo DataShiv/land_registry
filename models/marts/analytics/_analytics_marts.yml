@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: mart_monthly_district_market
+    description: >
+      One row per transaction month, district and property type.
+
+    columns:
+      - name: transaction_month
+        data_tests:
+          - not_null
+
+      - name: district
+        data_tests:
+          - not_null
+
+      - name: property_type
+        data_tests:
+          - not_null
+
+      - name: transaction_count
+        data_tests:
+          - not_null
+
+      - name: total_sales_value
+        data_tests:
+          - not_null
+
+      - name: median_sale_price
+        data_tests:
+          - not_null
+
+  - name: mart_previous_sale_performance
+    description: >
+      One row per current transaction month, district and current property
+      type, using transactions with a previous observed sale.
+
+    columns:
+      - name: transaction_month
+        data_tests:
+          - not_null
+
+      - name: district
+        data_tests:
+          - not_null
+
+      - name: property_type
+        data_tests:
+          - not_null
+
+      - name: matched_transaction_count
+        data_tests:
+          - not_null
+
+      - name: median_previous_sale_price
+        data_tests:
+          - not_null
+
+      - name: median_current_sale_price
+        data_tests:
+          - not_null
+
+      - name: median_holding_period_days
+        data_tests:
+          - not_null
