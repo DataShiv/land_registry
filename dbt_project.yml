@@ -1,35 +1,23 @@
 name: 'land_registry'
-version: "1.0.0"
+version: '1.0.0'
 config-version: 2
 
 profile: land_registry
 
-model-paths:
-  - models
-
-analysis-paths:
-  - analyses
-
-test-paths:
-  - tests
-
-seed-paths:
-  - seeds
-
-macro-paths:
-  - macros
-
-snapshot-paths:
-  - snapshots
-
-target-path: target
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
 
 clean-targets:
-  - target
-  - dbt_packages
+  - "target"
+  - "dbt_packages"
 
 models:
   land_registry:
+
     staging:
       +schema: staging
       +materialized: view
@@ -46,3 +34,15 @@ models:
       analytics:
         +schema: marts_analytics
         +materialized: table
+
+    incremental_lab:
+      +schema: incremental_lab
+
+      baseline:
+        +materialized: table
+
+      events:
+        +materialized: view
+
+      current_state:
+        +materialized: view
